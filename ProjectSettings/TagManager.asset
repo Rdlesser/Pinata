@@ -38,6 +38,15 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 4247263655
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Rope
+    uniqueID: 1125980201
+    locked: 0
+  - name: Pinata
+    uniqueID: 1700304203
     locked: 0
