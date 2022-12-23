@@ -36,13 +36,16 @@ public class DamageManager : MonoBehaviour
 
 	private void OnPinataDamaged()
 	{
-		GeneralEventsDispatcher.DispatchPinataDamagedEvent(GetDamageRange());
-		_slider.value += _damageIncrease;
-		if (_slider.value >= _damage3Range.y)
+		if (_slider.value + _damageIncrease >= _damage3Range.y)
 		{
 			_slider.value = _slider.maxValue;
 			StopCoroutine(_sliderCoroutine);
+			GeneralEventsDispatcher.DispatchPinataDestroyedEvent();
+			return;
 		}
+		
+		_slider.value += _damageIncrease;
+		GeneralEventsDispatcher.DispatchPinataDamagedEvent(GetDamageRange());
 	}
 
 	private int GetDamageRange()
