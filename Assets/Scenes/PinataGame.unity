@@ -296,7 +296,7 @@ GameObject:
   - component: {fileID: 502823617}
   - component: {fileID: 502823616}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: RightBoundary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -800,7 +800,7 @@ GameObject:
   - component: {fileID: 732967958}
   - component: {fileID: 732967957}
   m_Layer: 0
-  m_Name: GameObject (1)
+  m_Name: LeftBoundary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -819,7 +819,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 2.6954448}
+  m_Offset: {x: 0, y: 3.1206183}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -830,7 +830,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 6.3908906}
+  m_Size: {x: 1, y: 7.2412376}
   m_EdgeRadius: 0
 --- !u!4 &732967958
 Transform:
@@ -11036,7 +11036,7 @@ GameObject:
   - component: {fileID: 1897984964}
   - component: {fileID: 1897984963}
   m_Layer: 0
-  m_Name: GameObject (2)
+  m_Name: TopBoundary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
