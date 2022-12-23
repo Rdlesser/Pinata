@@ -8,5 +8,6 @@ public class ClickListener : MonoBehaviour
 	public void OnMouseDown()
 	{
 		ClickAction?.Invoke();
+		GeneralEventsDispatcher.DispatchPinataTappedEvent();
 	}
 }

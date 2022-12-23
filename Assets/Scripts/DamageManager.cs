@@ -11,12 +11,54 @@ public class DamageManager : MonoBehaviour
 	[SerializeField] private Vector2 _damage2Range;
 	[SerializeField] private Vector2 _damage3Range;
 	[SerializeField] private Slider _slider;
+	[SerializeField] private float _damageIncrease = 15f;
+	[SerializeField] private float _damageDecrease = 5f;
+	[SerializeField] private float _decreaseInterval = 0.3f;
 
 	private Coroutine _sliderCoroutine;
 	
 	private void OnEnable()
 	{
+		ResetSlider();
+		RegisterToEvents();
 		StartTimer();
+	}
+
+	private void ResetSlider()
+	{
+		_slider.value = _damage1Range.y;
+	}
+
+	private void RegisterToEvents()
+	{
+		GeneralEventsDispatcher.PinataTapped += OnPinataDamaged;
+	}
+
+	private void OnPinataDamaged()
+	{
+		GeneralEventsDispatcher.DispatchPinataDamagedEvent(GetDamageRange());
+		_slider.value += _damageIncrease;
+		if (_slider.value >= _damage3Range.y)
+		{
+			_slider.value = _slider.maxValue;
+			StopCoroutine(_sliderCoroutine);
+		}
+	}
+
+	private int GetDamageRange()
+	{
+		if (_slider.value <= _damage1Range.y)
+		{
+			return 1;
+		}
+
+		if (_slider.value <= _damage2Range.y &&
+			_slider.value >= _damage2Range.x)
+		{
+			return 2;
+		}
+
+		return 3;
 	}
 
 	private void StartTimer()
@@ -28,15 +70,20 @@ public class DamageManager : MonoBehaviour
 	{
 		while (_slider.value > 0)
 		{
-			if (_slider.value - 5 <= 0)
+			if (_slider.value - _damageDecrease <= 0)
 			{
 				_slider.value = 0;
 				StopCoroutine(_sliderCoroutine);
 				//TODO: Event for game finish
 			}
 			
-			yield return new WaitForSeconds(0.3f);
-			_slider.value -= 5;
+			yield return new WaitForSeconds(_decreaseInterval);
+			_slider.value -= _damageDecrease;
 		}
+	}
+
+	private void OnDisable()
+	{
+		GeneralEventsDispatcher.PinataTapped -= OnPinataDamaged;
 	}
 }

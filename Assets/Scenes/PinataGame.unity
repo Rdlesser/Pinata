@@ -1086,8 +1086,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage1Range: {x: 0, y: 147}
   _damage2Range: {x: 148, y: 292}
-  _damage3Range: {x: 293, y: 401}
+  _damage3Range: {x: 293, y: 440}
   _slider: {fileID: 1580882982}
+  _damageIncrease: 15
+  _damageDecrease: 1
+  _decreaseInterval: 0.1
 --- !u!1 &732967956
 GameObject:
   m_ObjectHideFlags: 0
@@ -6567,7 +6570,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 450
   m_WholeNumbers: 1
-  m_Value: 138
+  m_Value: 438
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
