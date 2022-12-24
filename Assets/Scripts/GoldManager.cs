@@ -43,13 +43,8 @@ public class GoldManager : MonoBehaviour
 
 	private void OnPinataDestroyed()
 	{
-		StartCoroutine(GameFinishedCoroutine());
-		
-	}
-
-	private IEnumerator GameFinishedCoroutine()
-	{
-		yield return null;
+		GeneralEventsDispatcher.PinataDamaged -= OnPinataDamaged;
+		GeneralEventsDispatcher.PinataDestroyed -= OnPinataDestroyed;
 		Value += _maxCoins - _value;
 	}
 
