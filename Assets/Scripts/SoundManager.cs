@@ -7,6 +7,12 @@ public class SoundManager : MonoBehaviour
 
 	private void Start()
 	{
+		PlayIntro();
+	}
+
+	[ContextMenu("PlayIntro()")]
+	public void PlayIntro()
+	{
 		_intro.Play();
 	}
 }

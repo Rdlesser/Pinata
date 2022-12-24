@@ -22,7 +22,7 @@ public class Pinata : MonoBehaviour
 
     private void RegisterAnimationControllerEvents()
     {
-        GeneralEventsDispatcher.PinataDamaged += _animationController.OnPinataDamaged;
+        _clickListener.ClickAction += _animationController.OnPinataDamaged;
     }
 
     private void RegisterForceApplierEvents()

@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class ClickListener : MonoBehaviour
 {
-	[SerializeField] 
-	
 	public Action ClickAction;
 	
 	public void OnMouseDown()
