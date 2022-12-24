@@ -7,12 +7,7 @@ public class PinataAnimationController : MonoBehaviour
 	
 	private static readonly int Hit = Animator.StringToHash("Hit");
 
-	private void OnEnable()
-	{
-		GeneralEventsDispatcher.PinataDamaged += OnPinataDamaged;
-	}
-
-	private void OnPinataDamaged(int damageRange)
+	public void OnPinataDamaged(int damageRange)
 	{
 		_animator.SetTrigger(Hit);
 	}

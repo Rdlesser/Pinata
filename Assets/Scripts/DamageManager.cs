@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Timers;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,9 +15,12 @@ public class DamageManager : MonoBehaviour
 	[SerializeField] private float _damageIncrease = 15f;
 	[SerializeField] private float _damageDecrease = 5f;
 	[SerializeField] private float _decreaseInterval = 0.3f;
+	[SerializeField] private Animator _backgroundImage;
 
 	private Coroutine _sliderCoroutine;
 	
+	private static readonly int Hit = Animator.StringToHash("Hit");
+
 	private void OnEnable()
 	{
 		ResetSlider();
@@ -31,13 +35,16 @@ public class DamageManager : MonoBehaviour
 
 	private void RegisterToEvents()
 	{
-		GeneralEventsDispatcher.PinataTapped += OnPinataDamaged;
+		GeneralEventsDispatcher.PinataTapped += OnPinataHit;
 	}
 
-	private void OnPinataDamaged()
+	private void OnPinataHit()
 	{
+		_backgroundImage.SetTrigger(Hit);
+		_backgroundImage.transform.DOShakePosition(0.1f, 0.2f);
 		if (_slider.value + _damageIncrease >= _damage3Range.y)
 		{
+			GeneralEventsDispatcher.PinataTapped -= OnPinataHit;
 			_slider.value = _slider.maxValue;
 			StopCoroutine(_sliderCoroutine);
 			GeneralEventsDispatcher.DispatchPinataDestroyedEvent();
@@ -87,6 +94,6 @@ public class DamageManager : MonoBehaviour
 
 	private void OnDisable()
 	{
-		GeneralEventsDispatcher.PinataTapped -= OnPinataDamaged;
+		GeneralEventsDispatcher.PinataTapped -= OnPinataHit;
 	}
 }
