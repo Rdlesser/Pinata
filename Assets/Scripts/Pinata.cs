@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Pinata : MonoBehaviour
@@ -28,5 +29,11 @@ public class Pinata : MonoBehaviour
     private void RegisterForceApplierEvents()
     {
         _clickListener.ClickAction += _forceApplier.ApplyRandomForce;
+    }
+
+    private void OnDisable()
+    {
+        GeneralEventsDispatcher.PinataDamaged -= _particleSystemManager.OnPinataDamaged;
+        GeneralEventsDispatcher.PinataDestroyed -= _particleSystemManager.OnPinataDestroyed;
     }
 }

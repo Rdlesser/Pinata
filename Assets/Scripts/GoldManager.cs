@@ -12,6 +12,7 @@ public class GoldManager : MonoBehaviour
 	[SerializeField] private string _numberFormat = "N0";
 	[SerializeField] private Vector2Int _addedCoinsRange = new Vector2Int(300, 500);
 	[SerializeField] private int _maxCoins = 20000;
+	[SerializeField] private float _maxCoinsDuration = 5f;
 	
 	private int _value = 0;
 	private Coroutine _countingCoroutine;
@@ -42,7 +43,14 @@ public class GoldManager : MonoBehaviour
 
 	private void OnPinataDestroyed()
 	{
-		Value = _maxCoins;
+		StartCoroutine(GameFinishedCoroutine());
+		
+	}
+
+	private IEnumerator GameFinishedCoroutine()
+	{
+		yield return null;
+		Value += _maxCoins - _value;
 	}
 
 	private void OnPinataDamaged(int damagerange)
@@ -59,15 +67,16 @@ public class GoldManager : MonoBehaviour
 			StopCoroutine(_countingCoroutine);
 		}
 
-		_countingCoroutine = StartCoroutine(CountText(newValue));
+		var duration = newValue == _maxCoins ? _maxCoinsDuration : _duration;
+		_countingCoroutine = StartCoroutine(CountText(newValue, _countFPS, duration));
 		GeneralEventsDispatcher.DispatchGoldUpdateValueEvent(newValue);
 	}
 	
-	private IEnumerator CountText(int newValue)
+	private IEnumerator CountText(int newValue, int countFPS = 30, float duration = 1f)
 	{
-		WaitForSeconds wait = new WaitForSeconds(1f / _countFPS);
+		WaitForSeconds wait = new WaitForSeconds(1f / countFPS);
 		int previousValue = _value;
-		int stepAmount = Mathf.FloorToInt((newValue - previousValue) / (_countFPS * _duration));
+		int stepAmount = Mathf.FloorToInt((newValue - previousValue) / (countFPS * duration));
 		
 		while(previousValue < newValue)
 		{
