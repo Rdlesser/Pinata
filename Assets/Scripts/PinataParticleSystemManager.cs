@@ -8,14 +8,21 @@ public class PinataParticleSystemManager : MonoBehaviour
 	[SerializeField] private ParticleSystem _damageParticles;
 	[SerializeField] private ParticleSystem _baseRewardParticles;
 	[SerializeField] private ParticleSystem _baseRewardParticlesForeground;
-		[SerializeField] private ParticleSystem _reward2Particles;
+	[SerializeField] private ParticleSystem _reward2Particles;
 	[SerializeField] private ParticleSystem _reward3Particles;
+	[SerializeField] private ParticleSystem _allGoldParticles;
 
 	public void OnPinataDamaged(int damageRange)
 	{
 		StopAllParticles();
 		HandleDamageRange(damageRange);
 		PlayParticles(damageRange);
+	}
+
+	public void OnPinataDestroyed()
+	{
+		_allGoldParticles.Stop(true);
+		_allGoldParticles.Play(true);
 	}
 
 	private void PlayParticles(int damageRange)

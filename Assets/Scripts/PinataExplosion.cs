@@ -36,8 +36,10 @@ public class PinataExplosion : MonoBehaviour
 	private void OnPinataDestroyed()
 	{
 		_pinata.enabled = false;
+		_pinata.GetComponent<Rigidbody2D>().simulated = false;
 		SetActiveExplodingParts();
 		AddExplosionForceToParts();
+		GeneralEventsDispatcher.DispatchPinataDestroyedEvent();
 	}
 
 	private void SetActiveExplodingParts(bool isActive = true)

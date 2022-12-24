@@ -17,6 +17,7 @@ public class Pinata : MonoBehaviour
     private void RegisterParticleSystemManagerEvents()
     {
         GeneralEventsDispatcher.PinataDamaged += _particleSystemManager.OnPinataDamaged;
+        GeneralEventsDispatcher.PinataDestroyed += _particleSystemManager.OnPinataDestroyed;
     }
 
     private void RegisterAnimationControllerEvents()
