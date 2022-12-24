@@ -1,6 +1,7 @@
 ﻿using System;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WinScreen : MonoBehaviour
 {
@@ -18,5 +19,15 @@ public class WinScreen : MonoBehaviour
 	{
 		GeneralEventsDispatcher.PinataDestroyed -= ShowWinScreen;
 		_winScreen.transform.DOScale(1, _animationTime).SetEase(_ease);
+	}
+
+	public void Restart()
+	{
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+	}
+
+	public void Quit()
+	{
+		Application.Quit();
 	}
 }
