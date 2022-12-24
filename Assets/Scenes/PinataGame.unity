@@ -682,6 +682,7 @@ GameObject:
   - component: {fileID: 259326571}
   - component: {fileID: 259326573}
   - component: {fileID: 259326572}
+  - component: {fileID: 259326574}
   m_Layer: 5
   m_Name: BottomBar
   m_TagString: Untagged
@@ -750,6 +751,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 259326570}
   m_CullTransparentMesh: 1
+--- !u!114 &259326574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 259326570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 764b9537bbf9448ab87930b728b50971, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _starImages:
+  - {fileID: 1381971362}
+  - {fileID: 1429058072}
+  - {fileID: 460912167}
+  _starFillAnimationTime: 1.5
+  _starPointRange: {x: 1500, y: 3000, z: 9000}
 --- !u!1 &318176395
 GameObject:
   m_ObjectHideFlags: 0

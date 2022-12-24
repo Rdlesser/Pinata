@@ -53,6 +53,7 @@ public class GoldManager : MonoBehaviour
 		}
 
 		_countingCoroutine = StartCoroutine(CountText(newValue));
+		GeneralEventsDispatcher.DispatchGoldUpdateValueEvent(newValue);
 	}
 	
 	private IEnumerator CountText(int newValue)

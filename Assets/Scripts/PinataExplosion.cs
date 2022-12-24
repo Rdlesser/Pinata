@@ -29,7 +29,7 @@ public class PinataExplosion : MonoBehaviour
 
 	private void RegisterToEvents()
 	{
-		GeneralEventsDispatcher.PinataDestroyed += OnPinataDestroyed;
+		GeneralEventsDispatcher.ThreeStarsReached += OnPinataDestroyed;
 	}
 
 	[ContextMenu("Explosion")]
