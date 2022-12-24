@@ -11,6 +11,7 @@ public class GoldManager : MonoBehaviour
 	[SerializeField] private float _duration = 1f;
 	[SerializeField] private string _numberFormat = "N0";
 	[SerializeField] private Vector2Int _addedCoinsRange = new Vector2Int(300, 500);
+	[SerializeField] private int _maxCoins = 20000;
 	
 	private int _value = 0;
 	private Coroutine _countingCoroutine;
@@ -36,6 +37,12 @@ public class GoldManager : MonoBehaviour
 	private void RegisterToEvents()
 	{
 		GeneralEventsDispatcher.PinataDamaged += OnPinataDamaged;
+		GeneralEventsDispatcher.PinataDestroyed += OnPinataDestroyed;
+	}
+
+	private void OnPinataDestroyed()
+	{
+		Value = _maxCoins;
 	}
 
 	private void OnPinataDamaged(int damagerange)

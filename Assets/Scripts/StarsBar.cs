@@ -35,9 +35,9 @@ public class StarsBar : MonoBehaviour
 	{
 		if (newvalue >= _starPointRange.z)
 		{
+			GeneralEventsDispatcher.GoldUpdatedValue -= OnGoldUpdatedValue;
 			UpdateStars(3);
 			GeneralEventsDispatcher.DispatchThreeStarsReached();
-			GeneralEventsDispatcher.GoldUpdatedValue -= OnGoldUpdatedValue;
 			return;
 		}
 
