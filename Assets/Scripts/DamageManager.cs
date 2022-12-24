@@ -23,9 +23,7 @@ public class DamageManager : MonoBehaviour
 
 	private void OnEnable()
 	{
-		ResetSlider();
 		RegisterToEvents();
-		StartTimer();
 	}
 
 	private void ResetSlider()
@@ -42,17 +40,7 @@ public class DamageManager : MonoBehaviour
 	{
 		_backgroundImage.SetTrigger(Hit);
 		_backgroundImage.transform.DOShakePosition(0.1f, 0.2f);
-		if (_slider.value + _damageIncrease >= _damage3Range.y)
-		{
-			GeneralEventsDispatcher.PinataTapped -= OnPinataHit;
-			_slider.value = _slider.maxValue;
-			StopCoroutine(_sliderCoroutine);
-			GeneralEventsDispatcher.DispatchPinataDestroyedEvent();
-			return;
-		}
-		
-		_slider.value += _damageIncrease;
-		GeneralEventsDispatcher.DispatchPinataDamagedEvent(GetDamageRange());
+		GeneralEventsDispatcher.DispatchPinataDamagedEvent(3);
 	}
 
 	private int GetDamageRange()
@@ -71,10 +59,10 @@ public class DamageManager : MonoBehaviour
 		return 3;
 	}
 
-	private void StartTimer()
-	{
-		_sliderCoroutine = StartCoroutine(DecreaseDamage());
-	}
+	// private void StartTimer()
+	// {
+	// 	_sliderCoroutine = StartCoroutine(DecreaseDamage());
+	// }
 
 	private IEnumerator DecreaseDamage()
 	{
