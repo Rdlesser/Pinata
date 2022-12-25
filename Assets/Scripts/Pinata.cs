@@ -17,8 +17,14 @@ public class Pinata : MonoBehaviour
 
     private void RegisterParticleSystemManagerEvents()
     {
-        GeneralEventsDispatcher.PinataDamaged += _particleSystemManager.OnPinataDamaged;
+        _clickListener.ClickAction += _particleSystemManager.OnPinataHit;
         GeneralEventsDispatcher.PinataDestroyed += _particleSystemManager.OnPinataDestroyed;
+    }
+
+    private void UnregisterParticleSystemManagerEvents()
+    {
+        _clickListener.ClickAction -= _particleSystemManager.OnPinataHit;
+        GeneralEventsDispatcher.PinataDestroyed -= _particleSystemManager.OnPinataDestroyed;
     }
 
     private void RegisterAnimationControllerEvents()
@@ -26,14 +32,30 @@ public class Pinata : MonoBehaviour
         _clickListener.ClickAction += _animationController.OnPinataDamaged;
     }
 
+    private void UnregisterAnimationControllerEvents()
+    {
+        _clickListener.ClickAction -= _animationController.OnPinataDamaged;
+    }
+
     private void RegisterForceApplierEvents()
     {
         _clickListener.ClickAction += _forceApplier.ApplyRandomForce;
     }
 
+    private void UnregisterForceApplierEvents()
+    {
+        _clickListener.ClickAction -= _forceApplier.ApplyRandomForce; 
+    }
+
     private void OnDisable()
     {
-        GeneralEventsDispatcher.PinataDamaged -= _particleSystemManager.OnPinataDamaged;
-        GeneralEventsDispatcher.PinataDestroyed -= _particleSystemManager.OnPinataDestroyed;
+        UnregisterAllEvents();
+    }
+
+    private void UnregisterAllEvents()
+    {
+        UnregisterAnimationControllerEvents();
+        UnregisterForceApplierEvents();
+        UnregisterParticleSystemManagerEvents();
     }
 }

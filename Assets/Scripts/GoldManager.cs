@@ -37,18 +37,18 @@ public class GoldManager : MonoBehaviour
 
 	private void RegisterToEvents()
 	{
-		GeneralEventsDispatcher.PinataDamaged += OnPinataDamaged;
+		GeneralEventsDispatcher.PinataTapped += OnPinataTapped;
 		GeneralEventsDispatcher.PinataDestroyed += OnPinataDestroyed;
 	}
 
 	private void OnPinataDestroyed()
 	{
-		GeneralEventsDispatcher.PinataDamaged -= OnPinataDamaged;
+		GeneralEventsDispatcher.PinataTapped -= OnPinataTapped;
 		GeneralEventsDispatcher.PinataDestroyed -= OnPinataDestroyed;
 		Value += _maxCoins - _value;
 	}
 
-	private void OnPinataDamaged(int damagerange)
+	private void OnPinataTapped()
 	{
 
 		var addedCoins = Random.Range(_addedCoinsRange.x, _addedCoinsRange.y);
