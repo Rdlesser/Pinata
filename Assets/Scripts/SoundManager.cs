@@ -1,14 +1,49 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class SoundManager : MonoBehaviour
 {
 	[SerializeField] private AudioSource _intro;
-	[SerializeField] private AudioSource _winSound;
+	[SerializeField] private AudioSource _bigWinSound;
+	[SerializeField] private List<AudioSource> _hitSounds;
+	[SerializeField] private AudioSource _backgroundMusic;
 
 	private void OnEnable()
 	{
-		GeneralEventsDispatcher.ThreeStarsReached += PlayWinSound;
+		RegisterToGameEvents();
+	}
+
+	private void RegisterToGameEvents()
+	{
+		GeneralEventsDispatcher.ThreeStarsReached += OnGameOver;
+		GeneralEventsDispatcher.PinataTapped += PlayHitSound;
+		SceneManager.sceneLoaded += PlayBackgroundMusic;
+	}
+	
+	private void UnregisterFromAllEvents()
+	{
+		GeneralEventsDispatcher.ThreeStarsReached -= OnGameOver;
+		GeneralEventsDispatcher.PinataTapped -= PlayHitSound;
+		SceneManager.sceneLoaded -= PlayBackgroundMusic;
+	}
+
+	private void PlayBackgroundMusic(Scene arg0, LoadSceneMode arg1)
+	{
+		PlayBackgroundMusic();
+	}
+
+	private void PlayBackgroundMusic()
+	{
+		_backgroundMusic.Play();
+	}
+
+	private void StopBackgroundMusic()
+	{
+		_backgroundMusic.Stop();
 	}
 
 	private void Start()
@@ -22,8 +57,26 @@ public class SoundManager : MonoBehaviour
 		_intro.Play();
 	}
 
+	private void OnGameOver()
+	{
+		StopBackgroundMusic();
+		PlayWinSound();
+	}
+
 	private void PlayWinSound()
 	{
-		_winSound.Play();
+		_bigWinSound.Play();
+	}
+
+	private void PlayHitSound()
+	{
+		var randomIndex = Random.Range(0, _hitSounds.Count - 1);
+		_hitSounds[randomIndex].Play();
+	}
+	
+
+	private void OnDisable()
+	{
+		UnregisterFromAllEvents();
 	}
 }

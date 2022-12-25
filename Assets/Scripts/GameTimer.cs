@@ -1,6 +1,7 @@
 ﻿using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameTimer : MonoBehaviour
 {
@@ -13,18 +14,41 @@ public class GameTimer : MonoBehaviour
 
 	private void OnEnable()
 	{
-		GeneralEventsDispatcher.ThreeStarsReached += PauseClock;
+		RegisterToEvents();
+	}
+
+	private void RegisterToEvents()
+	{
+		SceneManager.sceneLoaded += StartTimer;
+		GeneralEventsDispatcher.ThreeStarsReached += OnGameFinished;
+	}
+
+	private void UnregisterFromEvents()
+	{
+		SceneManager.sceneLoaded -= StartTimer;
+		GeneralEventsDispatcher.ThreeStarsReached -= OnGameFinished;
+	}
+
+	private void StartTimer(Scene arg0, LoadSceneMode arg1)
+	{
+		StartTimer();
+	}
+
+	private void StartTimer()
+	{
+		Init(_gameTimeInSeconds, _isCountingDown);
+		SetTimerRunning(true);
+	}
+
+	private void OnGameFinished()
+	{
+		UnregisterFromEvents();
+		PauseClock();
 	}
 
 	private void PauseClock()
 	{
 		SetTimerRunning(false);
-	}
-
-	private void Start()
-	{
-		Init(_gameTimeInSeconds, _isCountingDown);
-		SetTimerRunning(true);
 	}
 
 	private void Init(int gameTimeInSeconds, bool isCountingDown)
@@ -77,5 +101,10 @@ public class GameTimer : MonoBehaviour
 	private void UpdateCurrentTime()
 	{
 		_currentTime = _isCountingDown ? _currentTime -= Time.deltaTime : _currentTime += Time.deltaTime;
+	}
+
+	private void OnDisable()
+	{
+		UnregisterFromEvents();
 	}
 }
