@@ -33,6 +33,7 @@ public class DamageManager : MonoBehaviour
 	{
 		_backgroundImage.SetTrigger(Hit);
 		_backgroundImage.transform.DOShakePosition(0.1f, 0.2f);
+		Vibrator.Vibrate(150);
 		GeneralEventsDispatcher.DispatchPinataDamagedEvent(3);
 	}
 
