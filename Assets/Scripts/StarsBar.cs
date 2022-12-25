@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ public class StarsBar : MonoBehaviour
 	[SerializeField] private List<Image> _starImages;
 	[SerializeField] private float _starFillAnimationTime = 1.5f;
 	[SerializeField] private Vector3Int _starPointRange = new Vector3Int(1500, 3000, 9000);
+	[SerializeField] private List<TextMeshProUGUI> _starTexts;
 
 	private int _awardedStars;
 
@@ -23,6 +25,17 @@ public class StarsBar : MonoBehaviour
 		foreach (var starImage in _starImages)
 		{
 			starImage.fillAmount = 0;
+		}
+
+		ResetStarTexts();
+	}
+
+	private void ResetStarTexts()
+	{
+		for (int i = 0; i < _starTexts.Count; i++)
+		{
+			_starTexts[i].gameObject.SetActive(true);
+			_starTexts[i].text = _starPointRange[i].ToString();
 		}
 	}
 
@@ -60,5 +73,6 @@ public class StarsBar : MonoBehaviour
 	{
 		_awardedStars = newValue;
 		_starImages[newValue - 1].DOFillAmount(1, _starFillAnimationTime);
+		_starTexts[newValue - 1].gameObject.SetActive(false);
 	}
 }
