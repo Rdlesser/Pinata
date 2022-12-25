@@ -18,6 +18,9 @@
 	public delegate void ThreeStarsReachedEvent();
 	public static event ThreeStarsReachedEvent ThreeStarsReached;
 
+	public delegate void TimeUpEvent();
+	public static event TimeUpEvent TimeIsUp;
+
 	public static void DispatchPinataTappedEvent()
 	{
 		PinataTapped?.Invoke();
@@ -49,5 +52,10 @@
 	public static void DispatchOneStarReached()
 	{
 		OneStarReached?.Invoke();
+	}
+
+	public static void DispatchTimeIsUpEvent()
+	{
+		TimeIsUp?.Invoke();
 	}
 }
