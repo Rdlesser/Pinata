@@ -65,7 +65,7 @@ public class GameTimer : MonoBehaviour
 	{
 		var minutes = (int) _currentTime / 60;
 		var seconds = (int) _currentTime % 60;
-		var timerText = $"{minutes}:{seconds}";
+		var timerText = minutes > 0 ? $"{minutes}m {seconds}s" : $"{seconds}s";
 		_timerText.text = timerText;
 	}
 

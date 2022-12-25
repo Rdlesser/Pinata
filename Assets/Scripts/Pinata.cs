@@ -10,9 +10,15 @@ public class Pinata : MonoBehaviour
 
     private void OnEnable()
     {
+        RegisterClickListenerEvents();
         RegisterForceApplierEvents();
         RegisterAnimationControllerEvents();
         RegisterParticleSystemManagerEvents();
+    }
+
+    private void RegisterClickListenerEvents()
+    {
+        _clickListener.RegisterToEvents();
     }
 
     private void RegisterParticleSystemManagerEvents()

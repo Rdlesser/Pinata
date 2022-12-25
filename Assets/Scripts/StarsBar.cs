@@ -9,6 +9,8 @@ public class StarsBar : MonoBehaviour
 {
 	[SerializeField] private List<Image> _starImages;
 	[SerializeField] private float _starFillAnimationTime = 1.5f;
+	[SerializeField] private float _scaleEndValue = 1.2f;
+	[SerializeField] private float _starScaleAnimationTime = 0.3f;
 	[SerializeField] private Vector3Int _starPointRange = new Vector3Int(1500, 3000, 9000);
 	[SerializeField] private List<TextMeshProUGUI> _starTexts;
 
@@ -35,7 +37,7 @@ public class StarsBar : MonoBehaviour
 		for (int i = 0; i < _starTexts.Count; i++)
 		{
 			_starTexts[i].gameObject.SetActive(true);
-			_starTexts[i].text = _starPointRange[i].ToString();
+			_starTexts[i].text = _starPointRange[i].ToString("N0");
 		}
 	}
 
@@ -72,7 +74,10 @@ public class StarsBar : MonoBehaviour
 	private void UpdateStars(int newValue)
 	{
 		_awardedStars = newValue;
-		_starImages[newValue - 1].DOFillAmount(1, _starFillAnimationTime);
+		_starImages[newValue - 1].DOFillAmount(1, _starFillAnimationTime).OnComplete(() => 
+												_starImages[newValue - 1].transform.DOScale(1f,
+										 _starScaleAnimationTime));
+		_starImages[newValue - 1].transform.DOScale(_scaleEndValue, _starScaleAnimationTime);
 		_starTexts[newValue - 1].gameObject.SetActive(false);
 	}
 }
