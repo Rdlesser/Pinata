@@ -9,6 +9,7 @@ public class SoundManager : MonoBehaviour
 {
 	[SerializeField] private AudioSource _intro;
 	[SerializeField] private AudioSource _bigWinSound;
+	[SerializeField] private AudioSource _winSound;
 	[SerializeField] private List<AudioSource> _hitSounds;
 	[SerializeField] private AudioSource _backgroundMusic;
 
@@ -19,14 +20,16 @@ public class SoundManager : MonoBehaviour
 
 	private void RegisterToGameEvents()
 	{
-		GeneralEventsDispatcher.ThreeStarsReached += OnGameOver;
+		GeneralEventsDispatcher.ThreeStarsReached += OnThreeStarsReached;
+		GeneralEventsDispatcher.TimeIsUp += OnGameOver;
 		GeneralEventsDispatcher.PinataTapped += PlayHitSound;
 		SceneManager.sceneLoaded += PlayBackgroundMusic;
 	}
 	
 	private void UnregisterFromAllEvents()
 	{
-		GeneralEventsDispatcher.ThreeStarsReached -= OnGameOver;
+		GeneralEventsDispatcher.ThreeStarsReached -= OnThreeStarsReached;
+		GeneralEventsDispatcher.TimeIsUp -= OnGameOver;
 		GeneralEventsDispatcher.PinataTapped -= PlayHitSound;
 		SceneManager.sceneLoaded -= PlayBackgroundMusic;
 	}
@@ -63,9 +66,21 @@ public class SoundManager : MonoBehaviour
 		PlayWinSound();
 	}
 
-	private void PlayWinSound()
+	private void OnThreeStarsReached()
+	{
+		StopBackgroundMusic();
+		PlayWinSound();
+		PlayBigWinSound();
+	}
+
+	private void PlayBigWinSound()
 	{
 		_bigWinSound.Play();
+	}
+
+	private void PlayWinSound()
+	{
+		_winSound.Play();
 	}
 
 	private void PlayHitSound()

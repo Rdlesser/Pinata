@@ -24,6 +24,11 @@ public class DamageManager : MonoBehaviour
 		GeneralEventsDispatcher.PinataTapped += OnPinataHit;
 	}
 
+	private void UnregisterFromEvents()
+	{
+		GeneralEventsDispatcher.PinataTapped -= OnPinataHit;
+	}
+
 	private void OnPinataHit()
 	{
 		_backgroundImage.SetTrigger(Hit);
@@ -33,6 +38,6 @@ public class DamageManager : MonoBehaviour
 
 	private void OnDisable()
 	{
-		GeneralEventsDispatcher.PinataTapped -= OnPinataHit;
+		UnregisterFromEvents();
 	}
 }

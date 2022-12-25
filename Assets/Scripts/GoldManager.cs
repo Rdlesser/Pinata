@@ -41,10 +41,14 @@ public class GoldManager : MonoBehaviour
 		GeneralEventsDispatcher.PinataDestroyed += OnPinataDestroyed;
 	}
 
-	private void OnPinataDestroyed()
+	private void UnregisterFromEvents()
 	{
 		GeneralEventsDispatcher.PinataTapped -= OnPinataTapped;
 		GeneralEventsDispatcher.PinataDestroyed -= OnPinataDestroyed;
+	}
+
+	private void OnPinataDestroyed()
+	{
 		Value += _maxCoins - _value;
 	}
 
@@ -85,5 +89,10 @@ public class GoldManager : MonoBehaviour
 
 			yield return wait;
 		}
+	}
+
+	private void OnDisable()
+	{
+		UnregisterFromEvents();
 	}
 }
