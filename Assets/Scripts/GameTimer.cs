@@ -7,36 +7,41 @@ public class GameTimer : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI _timerText;
 	[SerializeField] private int _gameTimeInSeconds = 60;
 	[SerializeField] private bool _isCountingDown = true;
-	[SerializeField] private string _timeFormat = "{minutes}:{seconds}";
 
 	private float _currentTime;
 	private bool _isTimerRunning = false;
 
+	private void OnEnable()
+	{
+		GeneralEventsDispatcher.ThreeStarsReached += PauseClock;
+	}
+
+	private void PauseClock()
+	{
+		SetTimerRunning(false);
+	}
 
 	private void Start()
 	{
 		Init(_gameTimeInSeconds, _isCountingDown);
-		SetTimer(true);
+		SetTimerRunning(true);
 	}
 
 	private void Init(int gameTimeInSeconds, bool isCountingDown)
 	{
-		if (isCountingDown)
-		{
-			throw new NotImplementedException();
-		}
+		_currentTime = isCountingDown ? gameTimeInSeconds : 0;
 	}
 
-	public void SetTimer(bool isRunning)
+	public void SetTimerRunning(bool isRunning)
 	{
 		_isTimerRunning = isRunning;
 	}
 
 	private void UpdateTimerText()
 	{
-		var minutes = _currentTime / 60;
-		var seconds = _currentTime % 60;
-		var timerText = $"{_timeFormat}";
+		var minutes = (int) _currentTime / 60;
+		var seconds = (int) _currentTime % 60;
+		var timerText = $"{minutes}:{seconds}";
 		_timerText.text = timerText;
 	}
 
@@ -48,7 +53,25 @@ public class GameTimer : MonoBehaviour
 		}
 
 		UpdateCurrentTime();
+		if (HasTimerFinished())
+		{
+			StopClock();
+			GeneralEventsDispatcher.DispatchTimeIsUpEvent();
+		}
 		UpdateTimerText();
+	}
+
+	private void StopClock()
+	{
+		_currentTime = _isCountingDown ? 0 : _gameTimeInSeconds;
+		_timerText.color = Color.red;
+		SetTimerRunning(false);
+	}
+
+	private bool HasTimerFinished()
+	{
+		var result = _isCountingDown && _currentTime <= 0 || !_isCountingDown && _currentTime >= _gameTimeInSeconds;
+		return result;
 	}
 
 	private void UpdateCurrentTime()

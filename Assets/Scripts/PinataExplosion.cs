@@ -35,6 +35,7 @@ public class PinataExplosion : MonoBehaviour
 	[ContextMenu("Explosion")]
 	private void OnPinataDestroyed()
 	{
+		GeneralEventsDispatcher.ThreeStarsReached -= OnPinataDestroyed;
 		_pinata.enabled = false;
 		_pinata.GetComponent<Rigidbody2D>().simulated = false;
 		SetActiveExplodingParts();
@@ -72,5 +73,10 @@ public class PinataExplosion : MonoBehaviour
 		{
 			_pinataParts[i].position = _pinataPartsPositions[i];
 		}
+	}
+
+	private void OnDisable()
+	{
+		GeneralEventsDispatcher.ThreeStarsReached -= OnPinataDestroyed;
 	}
 }
