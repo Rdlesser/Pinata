@@ -27,7 +27,7 @@ public class WinScreen : MonoBehaviour
 	private void UnregisterFromEvents()
 	{
 		GeneralEventsDispatcher.PinataDestroyed -= ShowWinScreen;
-		GeneralEventsDispatcher.TimeIsUp += ShowWinScreen;
+		GeneralEventsDispatcher.TimeIsUp -= ShowWinScreen;
 	}
 
 	private void ShowWinScreen()
